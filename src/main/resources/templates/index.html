@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/head :: head">
+    <title>Pizzeria</title>
+</head>
+<body>
+    <div th:replace="fragments/navbar :: navbar"></div>
+
+    <div class="container mt-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Le nostre pizze</h1>
+            <a href="/pizze/nuova" class="btn btn-success">Aggiungi Pizza</a>
+        </div>
+        <div th:if="${pizze.isEmpty()}">
+            <div class="alert alert-warning">Nessuna pizza trovata.</div>
+        </div>
+
+        <div class="row" th:if="${!pizze.isEmpty()}">
+            <div class="col-md-4 mb-4" th:each="pizza : ${pizze}">
+                <div class="card h-100">
+                    <img th:src="${pizza.foto}" class="card-img-top" alt="Foto Pizza">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${pizza.nome}">Nome Pizza</h5>
+                        <p class="card-text" th:text="${pizza.descrizione}">Descrizione</p>
+                        <p class="card-text"><strong th:text="${#numbers.formatDecimal(pizza.prezzo, 1, 'POINT', 2, 'COMMA')} + ' €'">Prezzo</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
